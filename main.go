@@ -29,7 +29,6 @@ func main() {
 	}
 
 	assets:= crawler.Crawl(baseURL, client)
-
 	links := crawler.ExtractLinks(assets, baseURL, hostName)
 	crawler.PrintLinks(links)
 	crawler.OutputSitemap(assets)
