@@ -37,7 +37,7 @@ func getDOM(body io.Reader) (*html.Node, error) {
 	return parentNode, nil
 }
 
-func Crawl(url string, client *http.Client) ([]*html.Node, error) {
+func Crawl(url string, client *http.Client) []*html.Node {
 	resp, err := client.Get(url)
 	if err != nil {
 		log.Fatalln(err)
@@ -45,7 +45,7 @@ func Crawl(url string, client *http.Client) ([]*html.Node, error) {
 
 	if resp.StatusCode != 200 {
 		fmt.Printf("Unable to get URL %v; error status code: %d\n%s\n", url, resp.StatusCode, resp.Status)
-		return nil, nil
+		return nil
 	}
 
 	fmt.Printf("\nCrawling %v ... ⤵️\n", url)
@@ -56,5 +56,5 @@ func Crawl(url string, client *http.Client) ([]*html.Node, error) {
 		log.Fatalln(err)
 	}
 
-	return ExtractAssets(dom), nil
+	return ExtractAssets(dom)
 }

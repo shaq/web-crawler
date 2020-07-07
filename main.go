@@ -28,20 +28,14 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	assets, err := crawler.Crawl(baseURL, client)
-	if err != nil {
-		log.Println(err)
-	}
+	assets:= crawler.Crawl(baseURL, client)
 
 	links := crawler.ExtractLinks(assets, baseURL, hostName)
 	crawler.PrintLinks(links)
 	crawler.OutputSitemap(assets)
 
 	for link := range links {
-		a, err := crawler.Crawl(link, client)
-		if err != nil {
-			log.Fatalln(err)
-		}
+		a := crawler.Crawl(link, client)
 		if a != nil {
 			crawler.OutputSitemap(a)
 		}
