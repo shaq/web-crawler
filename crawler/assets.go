@@ -8,11 +8,11 @@ import (
 type void struct{}
 
 var ValidAssetTags = map[string]void{
-		"a":      {},
-		"script": {},
-		"img":    {},
-		"image":  {},
-	}
+	"a":      {},
+	"script": {},
+	"img":    {},
+	"image":  {},
+}
 
 func ExtractAssets(domNode *html.Node) []*html.Node {
 	if _, isValidTag := ValidAssetTags[domNode.Data]; domNode.Type == html.ElementNode && isValidTag {
@@ -32,14 +32,14 @@ func FormatAssets(assets []*html.Node) map[string]*[]string {
 	formatted := make(map[string]*[]string)
 	for _, asset := range assets {
 		for _, attr := range asset.Attr {
-			tag := attr.Key
-			data := asset.Data
+			key := attr.Key
+			tag := asset.Data
 			val := attr.Val
-			if data != "a" && tag == "src" && len(val) > 0 {
-				if _, exists := formatted[data]; exists {
-					*formatted[data] = append(*formatted[data], attr.Val)
-				} else if !exists {
-					formatted[data] = &[]string{attr.Val}
+			if tag != "a" && key == "src" && len(val) > 0 {
+				if _, exists := formatted[tag]; exists {
+					*formatted[tag] = append(*formatted[tag], attr.Val)
+				} else {
+					formatted[tag] = &[]string{attr.Val}
 				}
 			}
 		}
